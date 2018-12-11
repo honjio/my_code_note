@@ -1,14 +1,23 @@
-# Vue と TypeScript の比較 
+# Vanilla Vue と TypeScript Vue の比較
+
+## 資料概要
+* Vanilla Vue と TypeScript Vue の比較
+* Vue の機能一覧
+
+## 用語
+* この資料で使用される用語「インスタンス」は「コンポーネント」と同義語です。
+
+## Vanilla Vue
 ``` html
 <script>
 import sampleComponent from '~/components/sample-component.vue';
 
 export default {
-  // このコンポーネント内で使用するコンポーネントの定義
+  // このインスタンスで使用するコンポーネントの定義
   components: {
     sampleComponent,
   },
-  // 状態を管理する変数
+  // このインスタンスで使用するデータ定義
   data() {
     return {
       sampleInfo: 'string',
@@ -21,22 +30,26 @@ export default {
     'bbb',
     'ccc',
   ],
+  // 算出プロパティーの定義
   computed: {
-    // getter関数
+    // getter関数 {{ testFn }} / this.testFn　で実行される
     testFn: function() {
       return this.testInfo;
     },
-    // getter/setter関数の定義
+    // getter/setter関数の定義 
     sampleFn: {
       get: function() {
         return this.sampleInfo;
       },
+      // this.sampleFn = 'hoge' で実行される
       set: function(val) {
         this.sampleInfo = val;
       }
     }
   },
+  // メソッドの定義
   methots: {
+    // {{ sampleFn() }} / this.sampleFn() で実行される
     sampleFn: function() {
       console.log('test');
     }
@@ -98,3 +111,83 @@ export default {
 }
 </script>
 ```
+## TypeScript Vue
+``` ts
+<script lang="ts">
+import sampleComponent from '~/components/sample-component.vue';
+// nuxt-property-decorator は watch, props などの機能をデコレータとして使用するために使用
+import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator';
+
+// component: {}
+@Component({
+  components: {
+    sampleComponent,
+  }
+})
+export default class extends Vue {
+
+  // data() { return {} }
+  private sampleInfo: string = 'string';
+  private testInfo: string = 'hello'
+
+  // props: []
+  @Props()
+  public aaa?: string;
+  @Props()
+  public bbb?: string;
+  @Props()
+  public ccc?: string;
+
+  // computed: {}
+  get testFn(): string {
+    return this.testInfo;
+  }
+  get sampleFn(): string {
+    return this.sampleInfo;
+  }
+  set sampleFn(val) {
+    this.sampleInfo = val;
+  }
+
+  // methots: {}
+  private sampleFn(): void {
+    console.log('test');
+  }
+
+  // watch: {}
+  @Watch('sampleFn')
+  private sampleFnHandler() {
+    console.log('sampleFn に変更があったら実行される');
+  }
+
+  // ▼ 各ライフサイクルメソッド
+  private beforeCreate() {
+  }
+
+  private created() {
+  }
+
+  private beforeMount() {
+  }
+
+  private mounted() {
+  }
+
+  private beforeUpdate() {
+  }
+
+  private updated() {
+  }
+
+  private beforeDestroy() {
+  }
+
+  private destroyed() {
+  }
+}
+</script>
+```
+## 参考資料
+* [Vue.jsのライフサイクルメモ_Qiita_171016](https://qiita.com/kurosame/items/6ab7622fe30c299a693e)
+* [nuxt-property-decorator_npmDocument](https://www.npmjs.com/package/nuxt-property-decorator)
+* [create-nuxt-appで構築したNuxt2のプロジェクトにTypeScriptを導入_Qiita_181004](https://qiita.com/TsukasaGR/items/5c911a59875dce87fe42)
