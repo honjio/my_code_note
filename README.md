@@ -1,6 +1,6 @@
 # Root document
 
-## Noto list
+## Note list
 
 ### vue-typescript-181211
 
