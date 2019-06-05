@@ -68,4 +68,27 @@ const normalAsyncFunc04 = async () => setTimeout(() => {
 (async() => {
     console.log(await normalAsyncFunc04()); // Box4 は出力されない
 })();
+
+/**
+ * error ハンドリング例
+ * 引数に何らかの opiton がないと error になる関数
+ * Promise() の中で定義する関数の第２引数 reject を使用することで、error を catch してハンドリングできる。
+ */
+const errorAsyncFunc05 = async (option) => new Promise((resolve, reject) => {
+    setTimeout(() => {
+        option ? resolve('Box2') : reject(new Error('引数がありません'));
+    }, 3000)
+});
+
+(async() => {
+    await errorAsyncFunc05(); // Error
+    console.log('成功'); // 実行されない
+})();
+
+(async() => {
+    await errorAsyncFunc05().catch((err) => { // reject の内容を catch で捕まえることができる
+        console.log(err.message);
+    }); // Error のメッセージを console.log で出力
+    console.log('成功'); // 実行される
+})();
 ```
