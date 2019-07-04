@@ -78,14 +78,60 @@ GPU の方がグラフィックの処理が得意ならアニメーションす�
 
 #### 実際にレイヤーの生成を確認する
 
+<style>
+.nav {
+    position: relative;
+}
+.navLabel {
+    cursor: pointer;
+}
+.navRadio {
+    float: left;
+    margin-right: 8px;
+}
+.navText {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    background-color: #ddd;
+    width: 560px;
+    padding: 10px;
+    z-index: 0;
+    opacity: 0;
+}
+.navItem {
+    line-height: 1.4;
+    margin-bottom: 5px;
+}
+
+.navRadio:checked + .navItem + .navText {
+    z-index: 10;
+    opacity: 1;
+}
+</style>
+
 実際のレイヤー生成図（Chrome DevTools での確認）を確認します。
 
-1. `will-change: transform` により div#test01 がレイヤー化され視覚的に浮いている図
+※ 下記のチェック項目の切り替えにより各々のレイヤー図が表示されます。
+
+<div class="nav">
+<input class="navRadio" type="radio" id="nav1" name="nav" checked>
+<div class="navItem"><label class="navLabel" for="nav1">will-change: transform の適応</label></div>
+<p class="navText">
 <img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/layer-willchange.png?raw=true" width="560">
-2. `transform: translateZ(0)` により div#test01 がレイヤー化され視覚的に浮いている図
+</p>
+<input class="navRadio" type="radio" id="nav2" name="nav">
+<div class="navItem"><label class="navLabel" for="nav2">transform: translateZ(0) の適応</label></div>
+<p class="navText">
 <img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/layer-3d.png?raw=true" width="560">
-3. `transform: translateX(0)` を div#test01 に当てているがレイヤーは生成されていない図
+</p>
+<input class="navRadio" type="radio" id="nav3" name="nav">
+
+<div class="navItem"><label class="navLabel" for="nav3">transform: translateX(0) の適応</label></div>
+<p class="navText">
 <img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/layer-2d.png?raw=true" width="560">
+</p>
+</div>
 
 ## 参考資料
 
