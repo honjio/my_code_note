@@ -36,6 +36,8 @@ __レイヤー__ という概念を用い、その __レイヤー__ を移動さ
 例えば要素に対して「文字色の変更」だけであれば特に要素に変形が生じたりする訳ではないので、Layout（スタイルの再計算および再配置）は行われません。  
 １（Style） と ４（Composite） は必ず行われますが、２（Layout）と３（Paint）についてはスタイルの変更方法次第では省くことが可能です。Layout と Paint はコストのかかる処理なため、 __これを省くことでスムーズなアニメーションが実現可能__ となります。
 
+※ レンダリング済要素に再度変更があった際に行われる Layout 処理は __リフロー__ Paint 処理は __リペイント__ とも呼ばれます。
+
 ### レイヤーという概念について
 
 > Webページは、ひとたびロードされ、パースされると、多くのWebデベロッパーにおなじみの構造、つまりDOMに変換されます。しかしながら、ページをレンダリングするに当たって、ブラウザはデベロッパーが直接のぞくことのできないいくつかの中間形式を持ちます。これらのうち最も重要なものはレイヤーです。  
@@ -97,6 +99,12 @@ div#test01 が #document とは別にレイヤー化され浮いているのが�
 ただしアニメーション時にレイヤー生成され浮動化します（DevTools で確認済）。  
 <img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/layer-2d.png?raw=true" width="560">
 
+## レイヤーがあらかじめ生成されている利点
+
+`transform: translate(X,Y)` の他に `opacity` などのプロパティーが変化する際は GPU 処理されるためレイヤー生成されます。Paint 処理を伴う `right, left, top, bottom` よりは移動のアニメーションがスムーズに行われますが、レイヤーの生成は高コストなため場合によってはカクツキなどが発生する可能性があります。  
+
+`will-change` や `transform: translateZ(0)` などで予めレイヤーを生成しておくことで、アニメーション前に発生するレイヤー生成のコストを削減する事ができます。これによりアニメーションのカクツキが改善される場合があります。
+
 ## CPU 処理での移動と GPU処理での移動を比較する
 
 ### レンダリングの可視化
@@ -133,8 +141,64 @@ Paint が行われた箇所は緑色で表示（可視化）されます。
 
 GIF 画像は無しですが、「will-change: transform + transform(X, Y)」の場合と同じです。  
 ログを見ると「will-change: transform + transform(X, Y)」の場合とは違って Layout 処理のみ発生していますが、Paint 処理はされずにアニメーションできています。  
-これは `left` プロパティーで移動しているが、`will-change` によりレイヤー化されているためです。
+これは `left` プロパティーで移動しているが、`will-change` によりレイヤー化されているためです。  
+しかしながら、 Layout 処理を発生させない `transform: translate(X, Y)` での移動がパフォーマンス上有利になります。  
 <img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/log-willchange-left-interval.png?raw=true" width="560">
+
+## will-change はどのような場面で使用するべきか
+
+あくまで私個人の考察になりますが、下記の場合に使用の検討が考えられるかと思います。
+
+* `transform: translate(X, Y)` による移動を行なっているが、それでもカクツク場合。
+* アニメーションの際に、他にも高コスト（※１）なプロパティーの変更を行う要素の場合。
+* アニメーションを滑らかにしたい + アニメーションの頻度が高いと思われる要素。
+
+※１. 高コストなプロパティー
+> color: rgba(), border-radius, box-shadow, text-shadow, linear-gradient, position: fixed... など
+
+様々なページ（以下）から一部抜粋  
+[楽しく役に立つCSSのプロファイリング](https://postd.cc/profiling-css-for-fun-and-profit-optimization-notes/)  
+[プロパティやセレクタがパフォーマンスに与える影響](https://coliss.com/articles/build-websites/operation/css/things-nobody-ever-taught-me-about-css.html)  
+[レンダリングを意識したパフォーマンスチューニング](https://www.slideshare.net/hayatomizuno/ss-23379553)
+
+### will-change 使用の留意点
+
+ [こちら（MDN）](https://developer.mozilla.org/ja/docs/Web/CSS/will-change) にも記載されていますが、頻繁に使うべきプロパティーではありません。
+ style に静的に記述する場合は使用頻度を控えめに押さえましょう  
+
+ また、一度だけ行われるリッチなアニメーション（例えばページを表示する前の intro アニメーション）などがある場合は、アニメーションの前に JavaScript で will-change プロパティーを付与し、アニメーション終了後に取り除くといった処理が効果的だと思われます。
+
+## パフォーマンスの観点でアニメーション実装の際に気をつけられる事
+
+### リフローとリペイントを避ける
+
+最初の方に少し記載しましたが、Layout（リフロー）, Paint（リペイント） 処理の発生を抑える事が大事です。  
+
+> Reflowを減らすには
+> * 細かい単位でスタイルを変更せず、できればクラス一発で切り替える
+> * DOMに要素を追加する場合も、documentFragmentなどを使って、一気に追加する
+> * DOMへの追加前にスタイルを整えて、それからDOMに追加する
+>
+> [Qiita「Reflowを制するものはDOMを制す」より引用](https://qiita.com/jkr_2255/items/5cdead4ee7fa289bfeed) 
+
+> ウェブページのリフローを最小限に抑えるための簡単なガイドラインをいくつか紹介します
+> * 必要以上に DOM を深くしないようにします。DOM ツリー内の 1 階層での変更が、上はルート、下は変更されたノードの子に至るまで、ツリー内の全階層での変更の引き金になることがあります。それにより、リフローに要する時間がさらに長くなります。
+> * アニメーションなどの複雑なレンダリングの変更は、フローの外で行うようにします。これは「position: absolute」や「position: fixed」を使用することで実現できます。
+>
+> [Google「ブラウザのリフローを最小限にする」より一部抜粋引用](https://developers.google.com/speed/docs/insights/browser-reflow?hl=ja#header)
+
+引用文からの捕捉になりますが、アニメーションでリフローが発生しそうな要素を `position: absolute` で浮動化させておくと、リフローの影響をその要素のみに限定させ、周囲（外）の要素には影響を与えません。通常では要素の `width` などが変更されれば、その親要素の幅や子要素の幅にも影響を与えるので、自身以外もリフロー（再計算）の対象になってしまいます。
+
+他下記ページでもリフローやリペイントを押さえた実装方法を紹介されています。  
+=> [レンダリングを意識したパフォーマンスチューニング](https://www.slideshare.net/hayatomizuno/ss-23379553)
+
+### アニメーションで幾つかプロパティーを変更する際、GPU 処理されるプロパティーも活用する
+
+`transform` や `opacity` はアニメーション時に GPU レイヤーにて処理されます。  
+例えばアニメーションの際 `right, left, top, bottom` の値変更の他に `opacity` の値変更も加える事で、`right, left, top, bottom` の処理も GPU 処理に含まれリペイントの発生を無くすことができます。  
+
+実現したい表示によっても難しいかもしれませんが、高コストなプロパティーの変更がある際 GPU 処理されるプロパティーも一緒に変更する事で、処理を GPU に任せる事ができます。
+
 
 ## 参考資料
 
@@ -148,6 +212,3 @@ GIF 画像は無しですが、「will-change: transform + transform(X, Y)」の
 * [Qiita_スクロールが軽快に！will-change属性をつけるだけでFPSが...](https://qiita.com/ttiger55/items/b2423cb72668c3c98d89)
 * [Fix scrolling performance with CSS will-change property](https://www.fourkitchens.com/blog/article/fix-scrolling-performance-css-will-change-property/)
 * [github_Consider adding 'will-change: transform' even if translate3d if disabled](https://github.com/Microsoft/monaco-editor/issues/426#issuecomment-308395469)
-
-<!-- 
-<img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/g-move-willchange.gif"> -->
