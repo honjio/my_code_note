@@ -18,3 +18,8 @@
 ### css-custom-flocss-190627
 
 * FLOCSS（CSS設計）をベースに考えた独自設計をまとめた資料
+* [コンポーネント指向を CSS 設計へ取り入れよう](https://qiita.com/yuki153/items/98775ebe6461341657fc)
+
+### css-animation-190704
+
+* [CSS アニメーションを深く知る](https://qiita.com/yuki153/items/9aac0e5c8d7230a7bbe2)
