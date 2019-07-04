@@ -1,39 +1,6 @@
 # Web Performance Memo
 
-フロント側でできる web site の performance に関する施策メモ。  
-web site の表示速度を改善する方法として、下記のようなファイル自体を圧縮したり変換させたりといった方法を除いて、コードによる performance へのアプローチ方法をまとめておく。
-
-* 画像、HTML/CSS/JavaScript の圧縮
-* HTTPリクエストの削減
-  * スタイルのインライン記述
-  * 画像の埋め込み（bese64 化）
-  * 画像のスプライト化
-
 ## CSS
-
-### Reflow / Repaint を避ける
-
-description
-
-#### 参考資料（Reflow / Repaint を避ける）
-
-* [Qiita_Reflowを制するものはDOMを制す](https://qiita.com/jkr_2255/items/5cdead4ee7fa289bfeed)
-* [Google_ブラウザのリフローを最小限にする](https://developers.google.com/speed/docs/insights/browser-reflow?hl=ja)
-* [Google_レンダリング パフォーマンス](https://developers.google.com/web/fundamentals/performance/rendering/?hl=ja)
-* [パフォーマンス改善を行うためにGPU処理を取り入れてみた](http://un-tech.jp/performance-gpu/)
-* [レンダリングを意識したパフォーマンスチューニング](https://www.slideshare.net/hayatomizuno/ss-23379553)
-
-### will-change によるアニメーションの最適化（GPUレイヤー）
-
-description
-
-#### 参考資料（will-change によるアニメーションの最適化）
-
-* [wpj_60fpsを実現するベストプラクティス](https://www.webprofessional.jp/achieve-60-fps-mobile-animations-with-css3/)
-* [Dev.Opera_CSS will-changeプロパティについて知っておくべきこと](https://dev.opera.com/articles/ja/css-will-change-property/)
-* [Qiita_スクロールが軽快に！will-change属性をつけるだけでFPSが...](https://qiita.com/ttiger55/items/b2423cb72668c3c98d89)
-* [Fix scrolling performance with CSS will-change property](https://www.fourkitchens.com/blog/article/fix-scrolling-performance-css-will-change-property/)
-* [github_Consider adding 'will-change: transform' even if translate3d if disabled](https://github.com/Microsoft/monaco-editor/issues/426#issuecomment-308395469)
 
 ### セレクタの書き方が及ぼす performance への影響
 
