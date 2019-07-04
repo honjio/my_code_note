@@ -76,35 +76,26 @@ GPU の方がグラフィックの処理が得意ならアニメーションす�
 
 はじめの方に `right, left, top, bottom` は CPU で処理され、 `transform: translate(X, Y)` は GPU で処理されると説明しました。`transform: translate(X, Y)` などの 2d プロパティーでもレイヤーは生成されます。ただし、それはアニメーションの直前〜終了の間までの限定的なレイヤーの生成となります。`will-change` や `transform: translateZ(0)` が適応された要素では、アニメーションされる前からレイヤー生成が成され、それは `will-change` や `transform: translateZ(0)` が指定されている間ずっと保持されます。
 
-#### 実際にレイヤーの生成を確認する
+### 実際にレイヤーの生成を確認する
 
-<style>.nav{position: relative;}.navLabel{cursor: pointer;}
-.navRadio{float: left;margin-right: 8px;}
-.navText{position: absolute;top: 64px;left: 0;background-color: #ddd;width: 560px;padding: 10px;z-index: 0;opacity: 0;
-}.navItem {line-height: 1.4;margin-bottom: 5px;}.navRadio:checked + .navItem + .navText {z-index: 10;opacity: 1;}</style>
+実際のレイヤー生成図（Chrome DevTools での表示）を確認します。
 
-実際のレイヤー生成図（Chrome DevTools での確認）を確認します。
+#### `will-change: transform` の適応
 
-※ 下記のチェック項目の切り替えにより各々のレイヤー図が表示されます。
-
-<div class="nav">
-<input class="navRadio" type="radio" id="nav1" name="nav" checked>
-<div class="navItem"><label class="navLabel" for="nav1">will-change: transform の適応</label></div>
-<p class="navText">
+div#test01 が #document とは別にレイヤー化され浮いているのが分かります。  
 <img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/layer-willchange.png?raw=true" width="560">
-</p>
-<input class="navRadio" type="radio" id="nav2" name="nav">
-<div class="navItem"><label class="navLabel" for="nav2">transform: translateZ(0) の適応</label></div>
-<p class="navText">
-<img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/layer-3d.png?raw=true" width="560">
-</p>
-<input class="navRadio" type="radio" id="nav3" name="nav">
 
-<div class="navItem"><label class="navLabel" for="nav3">transform: translateX(0) の適応</label></div>
-<p class="navText">
+#### `transform: translateZ(0)` の適応
+
+`will-change` の場合とは違う位置（style 上の本来の位置）で浮動化していますが、  
+div#test01 が #document とは別にレイヤー化され浮いているのが分かります。  
+<img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/layer-3d.png?raw=true" width="560">
+
+#### `transform: translateX(0)` の適応
+
+`will-change` と `transform: translateZ(0)` の場合とは異なり、レイヤーが生成されていないのが分かります。  
+ただしアニメーション時にレイヤー生成され浮動化します（DevTools で確認済）。  
 <img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/layer-2d.png?raw=true" width="560">
-</p>
-</div>
 
 ## 参考資料
 
