@@ -80,9 +80,12 @@ GPU の方がグラフィックの処理が得意ならアニメーションす�
 
 実際のレイヤー生成図（Chrome DevTools での確認）を確認します。
 
-`will-change` により div#test01 がレイヤー化され視覚的に浮いている
-
+1. `will-change: transform` により div#test01 がレイヤー化され視覚的に浮いている図
 <img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/layer-willchange.png?raw=true" width="560">
+2. `transform: translateZ(0)` により div#test01 がレイヤー化され視覚的に浮いている図
+<img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/layer-3d.png?raw=true" width="560">
+3. `transform: translateX(0)` を div#test01 に当てているがレイヤーは生成されていない図
+<img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/layer-2d.png?raw=true" width="560">
 
 ## 参考資料
 
