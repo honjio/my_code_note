@@ -78,37 +78,10 @@ GPU の方がグラフィックの処理が得意ならアニメーションす�
 
 #### 実際にレイヤーの生成を確認する
 
-<style>
-.nav {
-    position: relative;
-}
-.navLabel {
-    cursor: pointer;
-}
-.navRadio {
-    float: left;
-    margin-right: 8px;
-}
-.navText {
-    position: absolute;
-    top: 64px;
-    left: 0;
-    background-color: #ddd;
-    width: 560px;
-    padding: 10px;
-    z-index: 0;
-    opacity: 0;
-}
-.navItem {
-    line-height: 1.4;
-    margin-bottom: 5px;
-}
-
-.navRadio:checked + .navItem + .navText {
-    z-index: 10;
-    opacity: 1;
-}
-</style>
+<style>.nav{position: relative;}.navLabel{cursor: pointer;}
+.navRadio{float: left;margin-right: 8px;}
+.navText{position: absolute;top: 64px;left: 0;background-color: #ddd;width: 560px;padding: 10px;z-index: 0;opacity: 0;
+}.navItem {line-height: 1.4;margin-bottom: 5px;}.navRadio:checked + .navItem + .navText {z-index: 10;opacity: 1;}</style>
 
 実際のレイヤー生成図（Chrome DevTools での確認）を確認します。
 
