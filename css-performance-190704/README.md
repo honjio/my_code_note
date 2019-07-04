@@ -76,11 +76,13 @@ GPU の方がグラフィックの処理が得意ならアニメーションす�
 
 はじめの方に `right, left, top, bottom` は CPU で処理され、 `transform: translate(X, Y)` は GPU で処理されると説明しました。`transform: translate(X, Y)` などの 2d プロパティーでもレイヤーは生成されます。ただし、それはアニメーションの直前〜終了の間までの限定的なレイヤーの生成となります。`will-change` や `transform: translateZ(0)` が適応された要素では、アニメーションされる前からレイヤー生成が成され、それは `will-change` や `transform: translateZ(0)` が指定されている間ずっと保持されます。
 
-#### 実際にレイヤー生成を確認する
+#### 実際にレイヤーの生成を確認する
+
+実際のレイヤー生成図（Chrome DevTools での確認）を確認します。
 
 `will-change` により div#test01 がレイヤー化され視覚的に浮いている
 
-<img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/layer-3d.png?raw=true" width="500">
+<img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/layer-willchange.png?raw=true" width="560">
 
 ## 参考資料
 
