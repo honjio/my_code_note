@@ -62,7 +62,7 @@ Paint（ピクセルの描画）はレイヤー単位で行われる。
 > Chromeにおいては、実際のところ複数の異なるタイプのレイヤーが存在します。RenderレイヤーはDOMのサブツリーに関して責任を持ちます。また、GraphicsレイヤーはRenderレイヤーのサブツリーに関して責任を持ちます。後者は我々にとってより興味深いものとなります。なぜならGraphicsレイヤーはテクスチャとしてGPUにアップロードされるからです。以後、単に「レイヤー」と行った場合はこのGraphicsレイヤーを指します。  
 [html5rocks.com 「レイヤーとは」より引用](https://www.html5rocks.com/ja/tutorials/speed/layers/)
 
-この内、GraphicLayer は GPU で処理されるレイヤーであり、Chrome の DevTools 実際に確認することができます。CSS の performance のために説明される「レイヤー」とはこの GraphicLayer を指すことが殆どだと思います。  
+この内、GraphicLayer は GPU で処理されるレイヤーであり、Chrome の DevTools で実際に確認することができます。CSS の performance のために説明される「レイヤー」とはこの GraphicLayer を指すことが殆どだと思います。  
 
 ## レイヤー（GPU）の生成について
 
@@ -118,7 +118,7 @@ Paint が行われた箇所は緑色で表示（可視化）されます。
 また、レンダリング（Style, Layout, Paint, Composite）のログを確認することもできます。  
 下記はそれぞれ要素に当てるプロパティーの違いによるレンダリングの差を可視化したものです。  
 
-#### CPU処理 right, left, top, bottom での移動
+#### CPU処理 left での移動
 
 移動に伴い緑色枠も密着するようについてきているのが分かります。  
 移動の度毎回 Paint 処理が走っているのを確認できます。  
@@ -126,7 +126,7 @@ Paint が行われた箇所は緑色で表示（可視化）されます。
 <img src="https://github.com/honjio/my-code-note/blob/master/css-animation-190704/reference-img/g-move-left.gif?raw=true" width="560">  
 <img src="https://github.com/honjio/my-code-note/blob/master/css-animation-190704/reference-img/log-left-interval.png?raw=true" width="560">
 
-#### GPU処理 transform: tlanslate(X,Y) または `transform: tlanslate(X, Y, Z) での移動
+#### GPU処理 transform: translate(X,Y) または `transform: translate(X, Y, Z) での移動
 
 最初と最後に少し Paint 処理が挟まっていますが、  
 移動区間では Paint 処理が走っていないことを確認できます。  
@@ -141,7 +141,7 @@ Paint が行われた箇所は緑色で表示（可視化）されます。
 <img src="https://github.com/honjio/my-code-note/blob/master/css-animation-190704/reference-img/g-move-willchange.gif?raw=true" width="560">  
 <img src="https://github.com/honjio/my-code-note/blob/master/css-animation-190704/reference-img/log-willchange-2d-interval.png?raw=true" width="560">
 
-#### GPU処理 will-change: trnasform + left による移動（GIF 画像なし）
+#### GPU処理 will-change: transform + left による移動（GIF 画像なし）
 
 GIF 画像は無しですが、「will-change: transform + transform(X, Y)」の場合と同じです。  
 ログを見ると「will-change: transform + transform(X, Y)」の場合とは違って Layout 処理のみ発生していますが、Paint 処理はされずにアニメーションできています。  
