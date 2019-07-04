@@ -89,19 +89,19 @@ GPU の方がグラフィックの処理が得意ならアニメーションす�
 #### will-change: transform の適応
 
 div#test01 が #document とは別にレイヤー化され浮いているのが分かります。  
-<img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/layer-willchange.png?raw=true" width="560">
+<img src="https://github.com/honjio/my-code-note/blob/master/css-animation-190704/reference-img/layer-willchange.png?raw=true" width="560">
 
 #### transform: translateZ(0) の適応
 
 `will-change` の場合とは違う位置（style 指定上の本来の位置）で浮動化していますが、  
 div#test01 が #document とは別にレイヤー化され浮いているのが分かります。  
-<img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/layer-3d.png?raw=true" width="560">
+<img src="https://github.com/honjio/my-code-note/blob/master/css-animation-190704/reference-img/layer-3d.png?raw=true" width="560">
 
 #### transform: translateX(0) の適応
 
 `will-change` と `transform: translateZ(0)` の場合とは異なり、レイヤーが生成されていないのが分かります。  
 ただしアニメーション時にレイヤー生成され浮動化します（DevTools で確認済）。  
-<img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/layer-2d.png?raw=true" width="560">
+<img src="https://github.com/honjio/my-code-note/blob/master/css-animation-190704/reference-img/layer-2d.png?raw=true" width="560">
 
 ## レイヤーがあらかじめ生成されている利点
 
@@ -123,23 +123,23 @@ Paint が行われた箇所は緑色で表示（可視化）されます。
 移動に伴い緑色枠も密着するようについてきているのが分かります。  
 移動の度毎回 Paint 処理が走っているのを確認できます。  
 ログのイメージからも Layout と Paint 処理が毎回挟まっているのが確認できます。  
-<img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/g-move-left.gif?raw=true" width="560">  
-<img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/log-left-interval.png?raw=true" width="560">
+<img src="https://github.com/honjio/my-code-note/blob/master/css-animation-190704/reference-img/g-move-left.gif?raw=true" width="560">  
+<img src="https://github.com/honjio/my-code-note/blob/master/css-animation-190704/reference-img/log-left-interval.png?raw=true" width="560">
 
 #### GPU処理 transform: tlanslate(X,Y) または `transform: tlanslate(X, Y, Z) での移動
 
 最初と最後に少し Paint 処理が挟まっていますが、  
 移動区間では Paint 処理が走っていないことを確認できます。  
 ログも `right, left, top, bottom` での移動とは異なり Layout 処理が回避され Paint 処理が減っているのを確認できます。  
-<img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/g-move-2d-3d.gif?raw=true" width="560">  
-<img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/log-2d-3d-interval.png?raw=true" width="560">
+<img src="https://github.com/honjio/my-code-note/blob/master/css-animation-190704/reference-img/g-move-2d-3d.gif?raw=true" width="560">  
+<img src="https://github.com/honjio/my-code-note/blob/master/css-animation-190704/reference-img/log-2d-3d-interval.png?raw=true" width="560">
 
 #### GPU処理 will-change: transform + transform(X, Y) での移動  
 
 一度も Paint 処理が成されず移動できていることが確認できます。  
 ログも Layout, Paint 処理が一切無いことを確認できます。  
-<img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/g-move-willchange.gif?raw=true" width="560">  
-<img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/log-willchange-2d-interval.png?raw=true" width="560">
+<img src="https://github.com/honjio/my-code-note/blob/master/css-animation-190704/reference-img/g-move-willchange.gif?raw=true" width="560">  
+<img src="https://github.com/honjio/my-code-note/blob/master/css-animation-190704/reference-img/log-willchange-2d-interval.png?raw=true" width="560">
 
 #### GPU処理 will-change: trnasform + left による移動（GIF 画像なし）
 
@@ -147,7 +147,7 @@ GIF 画像は無しですが、「will-change: transform + transform(X, Y)」の
 ログを見ると「will-change: transform + transform(X, Y)」の場合とは違って Layout 処理のみ発生していますが、Paint 処理はされずにアニメーションできています。  
 これは `left` プロパティーで移動しているが、`will-change` によりレイヤー化されているためです。  
 しかしながら、 Layout 処理を発生させない `transform: translate(X, Y)` での移動がパフォーマンス上有利になります。  
-<img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/log-willchange-left-interval.png?raw=true" width="560">
+<img src="https://github.com/honjio/my-code-note/blob/master/css-animation-190704/reference-img/log-willchange-left-interval.png?raw=true" width="560">
 
 ## will-change はどのような場面で使用するべきか
 
