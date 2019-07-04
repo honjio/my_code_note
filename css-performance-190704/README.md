@@ -80,22 +80,45 @@ GPU の方がグラフィックの処理が得意ならアニメーションす�
 
 実際のレイヤー生成図（Chrome DevTools での表示）を確認します。
 
-#### `will-change: transform` の適応
+#### will-change: transform の適応
 
 div#test01 が #document とは別にレイヤー化され浮いているのが分かります。  
 <img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/layer-willchange.png?raw=true" width="560">
 
-#### `transform: translateZ(0)` の適応
+#### transform: translateZ(0) の適応
 
-`will-change` の場合とは違う位置（style 上の本来の位置）で浮動化していますが、  
+`will-change` の場合とは違う位置（style 指定上の本来の位置）で浮動化していますが、  
 div#test01 が #document とは別にレイヤー化され浮いているのが分かります。  
 <img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/layer-3d.png?raw=true" width="560">
 
-#### `transform: translateX(0)` の適応
+#### transform: translateX(0) の適応
 
 `will-change` と `transform: translateZ(0)` の場合とは異なり、レイヤーが生成されていないのが分かります。  
 ただしアニメーション時にレイヤー生成され浮動化します（DevTools で確認済）。  
 <img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/layer-2d.png?raw=true" width="560">
+
+## CPU 処理での移動と GPU処理での移動を比較する
+
+### レンダリングの可視化
+
+Chrome の DevTools では要素が Paint される瞬間を可視化することができます。  
+Paint が行われた箇所は緑色で表示（可視化）されます。  
+下記はそれぞれ要素に当てるプロパティーの違いによるレンダリングの差を可視化したものです。  
+
+#### CPU処理 right, left, top, bottom での移動
+
+移動に伴い緑色枠も密着するようについてきているのが分かります。移動の度毎回 Paint 処理が走っているのを確認できます。  
+<img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/g-move-left.gif?raw=true">
+
+#### GPU処理 transform: tlanslate(X,Y) または `transform: tlanslate(X, Y, Z) での移動
+
+最初と最後に少し Paint 処理が挟まっていますが、移動区間では Paint 処理が走っていないことを確認できます。  
+<img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/g-move-2d-3d.gif?raw=true">
+
+#### GPU処理 will-change での移動  
+
+一度も Paint 処理が成されず移動できていることが確認できます。  
+<img src="https://github.com/honjio/my-code-note/blob/master/css-performance-190704/reference-img/g-move-willchange.gif?raw=true">
 
 ## 参考資料
 
