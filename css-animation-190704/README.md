@@ -160,10 +160,11 @@ GIF 画像は無しですが、「will-change: transform + transform(X, Y)」の
 ※１. 高コストなプロパティー
 > color: rgba(), border-radius, box-shadow, text-shadow, linear-gradient, position: fixed... など
 
-様々なページ（以下）から一部抜粋  
-[楽しく役に立つCSSのプロファイリング](https://postd.cc/profiling-css-for-fun-and-profit-optimization-notes/)  
-[プロパティやセレクタがパフォーマンスに与える影響](https://coliss.com/articles/build-websites/operation/css/things-nobody-ever-taught-me-about-css.html)  
-[レンダリングを意識したパフォーマンスチューニング](https://www.slideshare.net/hayatomizuno/ss-23379553)
+様々なページ（以下）から一部抜粋
+
+* [楽しく役に立つCSSのプロファイリング](https://postd.cc/profiling-css-for-fun-and-profit-optimization-notes/)  
+* [プロパティやセレクタがパフォーマンスに与える影響](https://coliss.com/articles/build-websites/operation/css/things-nobody-ever-taught-me-about-css.html)  
+* [レンダリングを意識したパフォーマンスチューニング](https://www.slideshare.net/hayatomizuno/ss-23379553)
 
 ### will-change 使用の留意点
 
@@ -203,15 +204,21 @@ GIF 画像は無しですが、「will-change: transform + transform(X, Y)」の
 
 実現したい表示によっても難しいかもしれませんが、高コストなプロパティーの変更がある際 GPU 処理されるプロパティーも一緒に変更する事で、処理を GPU に任せる事ができます。
 
-## 参考資料
+## 参考資料まとめ
 
 * [Google_Accelerated Rendering in Chrome](https://www.html5rocks.com/ja/tutorials/speed/layers/)
 * [Google_レンダリング パフォーマンス](https://developers.google.com/web/fundamentals/performance/rendering/?hl=ja)
+* [Google_ブラウザのリフローを最小限にする](https://developers.google.com/speed/docs/insights/browser-reflow?hl=ja)
 * [ブラウザにやさしいHTML/CSS](https://www.slideshare.net/TakeharuIgari/htmlcss-34506501)
 * [ブラウザレンダリングの仕組み](https://student-engineer.net/blowser-rendering/)
 * [hatena_ブラウザのレンダリングの仕組み](http://cidermitaina.hatenablog.com/entry/2019/03/03/232516)
 * [wpj_60fpsを実現するベストプラクティス](https://www.webprofessional.jp/achieve-60-fps-mobile-animations-with-css3/)
 * [Dev.Opera_CSS will-changeプロパティについて知っておくべきこと](https://dev.opera.com/articles/ja/css-will-change-property/)
+* [Qiita_DevToolsのTimelineパネルを見ながら、レンダリングの仕組みを理解する](https://qiita.com/cy-mitsuki/items/51a0a4c17b89154a7af2)
+* [Qiita_will-change指定時の挙動, パフォーマンスへの影響と考察](https://qiita.com/damele0n/items/71352757d0e6fdf5b184)
 * [Qiita_スクロールが軽快に！will-change属性をつけるだけでFPSが...](https://qiita.com/ttiger55/items/b2423cb72668c3c98d89)
+* [Qiita_Reflowを制するものはDOMを制す](https://qiita.com/jkr_2255/items/5cdead4ee7fa289bfeed)
 * [Fix scrolling performance with CSS will-change property](https://www.fourkitchens.com/blog/article/fix-scrolling-performance-css-will-change-property/)
 * [github_Consider adding 'will-change: transform' even if translate3d if disabled](https://github.com/Microsoft/monaco-editor/issues/426#issuecomment-308395469)
+* [パフォーマンス改善を行うためにGPU処理を取り入れてみた](http://un-tech.jp/performance-gpu/)
+* [レンダリングを意識したパフォーマンスチューニング](https://www.slideshare.net/hayatomizuno/ss-23379553)
