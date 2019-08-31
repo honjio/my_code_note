@@ -1,6 +1,6 @@
 # Root document
 
-## Note list
+## Notes
 
 ### vue-typescript-181211
 
@@ -17,9 +17,13 @@
 
 ### css-custom-flocss-190627
 
-* FLOCSS（CSS設計）をベースに考えた独自設計をまとめた資料
-* [コンポーネント指向を CSS 設計へ取り入れよう](https://qiita.com/yuki153/items/98775ebe6461341657fc)
+* [コンポーネント指向を CSS 設計へ取り入れよう](https://qiita.com/yuki153/items/98775ebe6461341657fc)  
+※ FLOCSS をベースに考えた独自設計をまとめた資料
 
 ### css-animation-190704
 
 * [CSS アニメーションを深く知る](https://qiita.com/yuki153/items/9aac0e5c8d7230a7bbe2)
+
+### es6-class-performance-190821
+
+* [ES6 class 構文のパフォーマンスについて](https://qiita.com/yuki153/items/120422ae5bdd309f777a)
