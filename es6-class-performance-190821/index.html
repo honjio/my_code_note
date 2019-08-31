@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            display: flex;
+            height: 400px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <div class="box" id="js-es6Class"></div>
+    <script>
+        // new で作成した instance を保存する（メモリ使用料計測用）
+        window.savingVariable = [];
+
+        /**
+         * class Shape の引数に渡す option
+         */
+        const option = {
+            width: 200,
+            height: 200,
+            backgroundColor: '#ddd',
+            text: 'Hello',
+            parent: document.getElementById('js-es6Class'),
+        }
+
+        /**
+         * DOM を生成し、DOM の操作を行う
+         * @param {Number} option.width 生成される DOM の幅
+         * @param {Number} option.height 生成される DOM の高さ
+         * @param {String} option.backgroundColor 生成される DOM の背景色
+         * @param {String} option.text 生成される DOM に挿入されるテキスト
+         * @param {HTMLElement} option.parent 生成する DOM を挿入する要素
+         */
+        class Shape {
+            constructor(option) {
+                this.shape = document.createElement('div');
+                this._text = document.createTextNode(option.text);
+                this._width = option.width;
+                this._height = option.height;
+                this._backgroundColor = option.backgroundColor;
+                this.parent = option.parent;
+            }
+            add() {
+                this.width().height().backgroundColor();
+                this.shape.appendChild(this._text);
+                this.parent.appendChild(this.shape);
+            }
+            text(t) {
+                this._text.nodeValue = t;
+                return this;
+            }
+            width(w = this._width) {
+                if (w !== this._width) this._width = w;
+                this.shape.style.width = `${this._width}px`;
+                return this;
+            }
+            height(h = this._height) {
+                if (h !== this._height) this._height = h;
+                this.shape.style.height = `${this._height}px`;
+                return this;
+            }
+            backgroundColor(c = this._backgroundColor) {
+                if (c !== this._backgroundColor) this._backgroundColor = c;
+                this.shape.style.backgroundColor = this._backgroundColor;
+                return this;
+            }
+            transition(bool) {
+                if (bool) this.shape.style.transition = '.3s';
+            }
+        }
+
+        /**
+         * class Shape のアロー関数バージョン
+         */
+        const shape = (opiton) => {
+            const el = document.createElement('div');
+            const _text = document.createTextNode(option.text);
+            const _width = option.width;
+            const _height = option.height;
+            const _backgroundColor = option.backgroundColor;
+            const parent = option.parent;
+            return {
+                add() {
+                    this.width().height().backgroundColor();
+                    el.appendChild(_text);
+                    parent.appendChild(el);
+                },
+                text(t) {
+                    _text.nodeValue = t;
+                    return this;
+                },
+                width(w = _width) {
+                    if (w !== _width) _width = w;
+                    el.style.width = `${_width}px`;
+                    return this;
+                },
+                height(h = _height) {
+                    if (h !== _height) _height = h;
+                    el.style.height = `${_height}px`;
+                    return this;
+                },
+                backgroundColor(c = _backgroundColor) {
+                    if (c !== _backgroundColor) _backgroundColor = c;
+                    el.style.backgroundColor = _backgroundColor;
+                    return this;
+                },
+                transition(bool) {
+                    if (bool) el.style.transition = '.3s';
+                }
+            }
+        };
+
+        const box1 = new Shape(option);
+        box1.add();
+
+        // console.time("no new");
+        // for (let i = 0; i < 100000; i++) {
+        //     // const box = shape(option);
+        //     savingVariable.push(shape(option));
+        // }
+        // console.timeEnd("no new");
+        // 10 time: 0.198, 0.171, 0.175ms  memory: 8.220MB LIVE 4.594MB
+        // 100000 time: 288.227, 232.893, 244.277ms  memory: 65.692MB LIVE 62.518MB
+        // 100000 time: 86.072, 83.144, 92.013ms 【GC】
+
+        console.time("new");
+        for (let i = 0; i < 10; i++) {
+            // const box = new Shape(option);
+            savingVariable.push(new Shape(option));
+        }
+        console.timeEnd("new");
+        // 10 time: 0.148, 0.172, 0.161ms  memory: 7.964MB LIVE 4.590MB
+        // 100000 time: 107.515, 93.580, 131.524ms  memory: 23.196MB LIVE 20.369MB
+        // 100000 time: 79.072, 77.062, 85.856ms 【GC】
+
+
+        class Sample {
+            constructor() {
+                this.text = 'hello'
+            }
+            getWord() {
+                return this.text;
+            }
+        }
+
+        const sample = () => {
+            const text = 'hello';
+            return {
+                getWord() {
+                    return text;
+                }
+            }
+        }
+
+        // console.time("no new");
+        // for (let i = 0; i < 100000; i++) {
+        //     const test = sample();
+        //     savingVariable.push(test);
+        // }
+        // console.timeEnd("no new");
+        // 10 time: 0.054, 0.049, 0.049ms  memory: 7.668MB LIVE 4.713MB
+        // 100000 time: 7.521, 7.259, 6.287ms  memory: 22.388MB LIVE 19.667MB
+
+        // console.time("new");
+        // for (let i = 0; i < 100000; i++) {
+        //     const testNew = new Sample();
+        //     savingVariable.push(testNew);
+        // }
+        // console.timeEnd("new");
+        // 10 time: 0.040, 0.047, 0.042ms  memory: 7.412MB LIVE 4.713MB
+        // 100000 time: 10.986, 8.089, 14.462ms  memory: 11.488MB LIVE 8.837MB
+    </script>
+</body>
+</html>
