@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery performance</title>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js'></script>
+</head>
+<body>
+    <h1>Get height performance</h1>
+    <p class="sample" style="width: 150px; padding: 10px 0 20px 0; border:2px solid red">
+        あのイーハトーヴォのすきとおった風、夏でも底に冷たさをもつ青いそら、うつくしい森で飾られたモリーオ市、郊外のぎらぎらひかる草の波。
+    </p>
+    <dl class="result">
+        <dt class="result__title">jQuery</dt>
+        <dd class="result__item js-timeA"></dd>
+        <dd class="result__item js-heightA"></dd>
+        <dt class="result__title">vanillaJs</dt>
+        <dd class="result__item js-timeB"></dd>
+        <dd class="result__item js-heightB"></dd>
+    </dl>
+    <script>
+        /**
+         * 要素の height の計算を行う。
+         * 引数の真偽値で vanillaJs / jQuery での計算に切り替える
+         * @param {Boolean} bool
+         */
+        const calculateHeight = (bool) => {
+            let totalTime = 0;
+            let height = 0;
+            for (let i=0; i < 200; i++) {
+                const startTime = Date.now();
+                const $sample = $('.sample');
+                for (let i=0; i < 15; i++) {
+                    if (bool) {
+                        const base = $sample[0].clientHeight;
+                        const top = $sample[0].style.getPropertyValue('padding-top');
+                        const bottom = $sample[0].style.getPropertyValue('padding-bottom');
+                        height = base - (parseInt(top) + parseInt(bottom));
+                    } else {
+                        height = $sample.height();
+                    }
+                }
+                const endTime = Date.now();
+                totalTime += endTime - startTime;
+            }
+            return {
+                getHeight() {
+                    return height;
+                },
+                getTime() {
+                    return totalTime;
+                }
+            }
+        };
+
+        const $timeA = $('.js-timeA');
+        const $heightA = $('.js-heightA');
+        const $timeB = $('.js-timeB');
+        const $heightB = $('.js-heightB');
+        const calculationA = calculateHeight(false);
+        const calculationB = calculateHeight(true);
+
+        $timeA.html(`time: ${calculationA.getTime()}ms`);
+        $heightA.html(`height: ${calculationA.getHeight()}px`);
+        $timeB.html(`time: ${calculationB.getTime()}ms`);
+        $heightB.html(`height: ${calculationB.getHeight()}px`);
+    </script>
+</body>
+</html>
