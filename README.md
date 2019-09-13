@@ -27,3 +27,7 @@
 ### es6-class-performance-190821
 
 * [ES6 class 構文のパフォーマンスについて](https://qiita.com/yuki153/items/120422ae5bdd309f777a)
+
+### jquery-performance-190912
+
+* $('xxx').height() の速度調査
