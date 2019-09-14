@@ -28,6 +28,10 @@
 
 * [ES6 class 構文のパフォーマンスについて](https://qiita.com/yuki153/items/120422ae5bdd309f777a)
 
+### firebase-nuxt-deploy-190910
+
+* Firebase への nuxt project デプロイ方法メモ
+
 ### jquery-performance-190912
 
 * $('xxx').height() の速度調査
