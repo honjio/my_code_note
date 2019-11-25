@@ -35,3 +35,7 @@
 ### jquery-performance-190912
 
 * $('xxx').height() の速度調査
+
+### firebase-initialize-app-191125
+
+* [firebase.initializeApp() に必要な config 情報に appId がいつの間にか追加されていた](https://qiita.com/yuki153/items/a6909e180cbbb6dfd2e4)
