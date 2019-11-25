@@ -30,7 +30,7 @@
 
 ### firebase-nuxt-deploy-190910
 
-* Firebase への nuxt project デプロイ方法メモ
+* [Firebase への nuxt project デプロイ方法（メモ）](https://qiita.com/yuki153/items/2bd30a5a7a33400f55f8)
 
 ### jquery-performance-190912
 
