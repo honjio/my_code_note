@@ -27,7 +27,7 @@ ODEKAKE TODO（お出かけTODO）というWebアプリケーション（PWA）�
 
 簡易な画面遷移図で紹介すると下記の様なイメージのアプリケーションになります。
 
-<img src="./odekake-pages.png" width="680" alt="">
+<img src="./odekake-pages.png" width="720" alt="">
 
 ## ① Figma で大雑把にベースイメージのデザイン
 
@@ -37,7 +37,7 @@ ODEKAKE TODO（お出かけTODO）というWebアプリケーション（PWA）�
 
 下記がコーディングの指標のため作成したベースイメージです。
 
-<img src="./odekake-design-image.png" width="680" alt="">
+<img src="./odekake-design-image.png" width="720" alt="">
 
 ### 色と UI について
 
