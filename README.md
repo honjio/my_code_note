@@ -1,12 +1,6 @@
 # Notes
 
-<style>
-    td:first-child {
-        width: 260px;
-    }
-</style>
-
-| document file names| description |
+| <div style="width:250px;">document file names</div> | description |
 |:---|:---|
 | [181211-vue-typescript](/181211-vue-typescript)| Vue（TypeScript / Vanilla）の比較と、ライフサイクル機能一覧
 | [190315-javascript](/190315-javascript) | [Qiita : JavaScript で陥りやすい失敗例](https://qiita.com/yuki153/items/c909c54204eaab6ca1b2) |
