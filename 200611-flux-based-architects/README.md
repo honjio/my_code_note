@@ -1,6 +1,7 @@
 # Data flow diagrams based on flux's of each state management library
 
-View, Action, Dispatcher, Store, +α で表したデータの流れ図です。各イメージの右側は View を除いたデータの流れを実際のコード例で可視化した図になります。
+View, Action, Dispatcher, Store, +α で表したデータの流れ図。  
+各画像の右側には View を除いたデータの流れを実際のコード例で可視化したものを記載。
 
 ## Flux
 
