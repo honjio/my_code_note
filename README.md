@@ -14,4 +14,5 @@
 |[191225-odekake-todo-app](/191225-odekake-todo-app)| [Qiita : FirebaseとNuxtでWebアプリ (SPA/PWA) を個人開発。その過程での<br>学び等々を紹介](https://qiita.com/yuki153/items/f36600376b4d18d77708)|
 |[200327-ssh-connect](/200327-ssh-connect)| ssh 接続についてのメモ|
 |[200330-mac-ssh-agent](/200330-mac-ssh-agent)| [Qiita : Mac OS X以降のssh-agent事情](https://qiita.com/yuki153/items/0ad5cb02faf3ecdcf903)|
+|[200527-liskov-principle](/200527-liskov-principle)| [Qiita : リスコフの置換原則（LSP）をしっかり理解する](https://qiita.com/yuki153/items/142d0d7a556cab787fad)|
 |[200611-flux-based-architects](/200611-flux-based-architects)| Flux をベースとした各状態管理ライブラリのデータフロー図|
