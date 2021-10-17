@@ -16,3 +16,5 @@
 |[200330-mac-ssh-agent](/200330-mac-ssh-agent)| [Qiita : Mac OS X以降のssh-agent事情](https://qiita.com/yuki153/items/0ad5cb02faf3ecdcf903)|
 |[200527-liskov-principle](/200527-liskov-principle)| [Qiita : リスコフの置換原則（LSP）をしっかり理解する](https://qiita.com/yuki153/items/142d0d7a556cab787fad)|
 |[200611-flux-based-architects](/200611-flux-based-architects)| Flux をベースとした各状態管理ライブラリのデータフロー図|
+|[210125-typescript-namespace](/210125-typescript-namespace)| [TypeScriptのnamespaceは非推奨ではない](https://qiita.com/yuki153/items/a51878ad6a1ce913af48)|
+|[210201-first-circle-ci](/210201-first-circle-ci)| [CircleCI 初学者が躓いた点と覚えておいた方が良さそうと感じた点をピックアップ](https://qiita.com/yuki153/items/a527a774503dd1a246ff)|
