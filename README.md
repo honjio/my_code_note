@@ -18,3 +18,4 @@
 |[200611-flux-based-architects](/200611-flux-based-architects)| Flux をベースとした各状態管理ライブラリのデータフロー図|
 |[210125-typescript-namespace](/210125-typescript-namespace)| [TypeScriptのnamespaceは非推奨ではない](https://qiita.com/yuki153/items/a51878ad6a1ce913af48)|
 |[210201-first-circle-ci](/210201-first-circle-ci)| [CircleCI 初学者が躓いた点と覚えておいた方が良さそうと感じた点をピックアップ](https://qiita.com/yuki153/items/a527a774503dd1a246ff)|
+|[221105-scram-memo](/221105-scram-memo)| スクラム開発についての調べ|
